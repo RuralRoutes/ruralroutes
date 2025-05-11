@@ -7,51 +7,34 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background: #f4f9f4;
   color: #333;
-  line-height: 1.6;
-}
-
-/* Hero Section */
-.hero {
-  position: relative;
-  background-image: url('https://picsum.photos/id/260/1920/1080 ');
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
   text-align: center;
-  color: white;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
   padding: 20px;
 }
 
-.hero h1 {
-  font-size: 3rem;
+.container {
+  max-width: 600px;
+}
+
+h1 {
+  font-size: 2rem;
   margin-bottom: 20px;
+  color: #2d752f;
 }
 
-.hero p {
-  font-size: 1.2rem;
+p {
+  font-size: 1.1rem;
   margin-bottom: 30px;
+  line-height: 1.6;
 }
 
-.cta-button {
+.download-btn {
+  display: inline-block;
   padding: 12px 24px;
   background-color: #2d752f;
   color: white;
@@ -61,38 +44,6 @@ body {
   transition: background 0.3s ease;
 }
 
-.cta-button:hover {
+.download-btn:hover {
   background-color: #225c23;
-}
-
-/* Features Section */
-.features {
-  padding: 60px 20px;
-  background-color: #f4f9f4;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 30px;
-}
-
-.feature-card {
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  text-align: center;
-}
-
-.feature-card h3 {
-  margin-bottom: 15px;
-  color: #2d752f;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #e8f5e9;
-  font-size: 0.9rem;
 }
