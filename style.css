@@ -99,3 +99,12 @@ body {
 
 
 
+.logo {
+  display: block;
+  margin: 0 auto;            
+  width: 25%;                /* Reduce al 25% de su tamaño original --- por lo que será... un 75% más pequeña */
+  max-width: 200px;          /* limitar tamaño máximo... */
+  height: auto;              /* Mantener proporción con auto para el alto ;) */
+}
+
+
