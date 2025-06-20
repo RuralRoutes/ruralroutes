@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Routes - Restablecer Contraseña</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .mobile-section {
+            display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .desktop-section {
+            display: block;
+            padding: 20px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .qr-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .instructions {
+            text-align: left;
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .success {
+            color: #155724;
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-section {
+                display: block;
+            }
+            .desktop-section {
+                display: none;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🚌 Rural Routes</div>
+        <h1>Restablecer Contraseña</h1>
+        
+        <!-- Sección para móviles -->
+        <div class="mobile-section" id="mobileSection">
+            <h3>📱 Dispositivo Móvil Detectado</h3>
+            <p>Vamos a abrir la aplicación Rural Routes para que puedas cambiar tu contraseña.</p>
+            
+            <div class="loading" id="loadingSection">
+                <div class="spinner"></div>
+                <p>Abriendo aplicación...</p>
+            </div>
+            
+            <div id="mobileOptions">
+                <a href="#" class="btn" id="openAppBtn">Abrir Aplicación</a>
+                <br><br>
+                <p><small>¿No tienes la app instalada?</small></p>
+                <a href="https://play.google.com/store/apps/details?id=com.terreta.ruralroutes" class="btn btn-secondary">Descargar App</a>
+            </div>
+        </div>
+        
+        <!-- Sección para escritorio -->
+        <div class="desktop-section" id="desktopSection">
+            <h3>💻 Acceso desde Ordenador</h3>
+            <p><strong>Para restablecer tu contraseña necesitas usar tu dispositivo móvil.</strong></p>
+            
+            <div class="instructions">
+                <strong>Instrucciones:</strong>
+                <ol>
+                    <li>Abre este email en tu <strong>teléfono móvil</strong></li>
+                    <li>O escanea el código QR desde tu móvil</li>
+                    <li>La aplicación Rural Routes se abrirá automáticamente</li>
+                    <li>Introduce tu nueva contraseña</li>
+                </ol>
+            </div>
+            
+            <div class="qr-container">
+                <p><strong>Código QR para móvil:</strong></p>
+                <canvas id="qrcode" style="border: 1px solid #ddd; border-radius: 8px;"></canvas>
+                <p><small>Escanea con la cámara de tu móvil</small></p>
+            </div>
+            
+            <a href="mailto:?subject=Rural Routes - Restablecer contraseña&body=Haz click en este enlace desde tu móvil para restablecer tu contraseña: [RESET_URL]" class="btn btn-secondary">
+                📧 Reenviar a mi móvil
+            </a>
+        </div>
+        
+        <!-- Sección de error -->
+        <div class="error" id="errorSection" style="display: none;">
+            <strong>⚠️ Error</strong>
+            <p>No se pudo abrir la aplicación. Por favor:</p>
+            <ul>
+                <li>Asegúrate de tener la app Rural Routes instalada</li>
+                <li>Intenta abrir este enlace desde el navegador móvil</li>
+                <li>Contacta con soporte si el problema persiste</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Incluir librería para generar QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    
+    <script>
+        // Detectar si es móvil
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Obtener parámetros de URL
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+            return {
+                access_token: urlParams.get('access_token') || hashParams.get('access_token'),
+                refresh_token: urlParams.get('refresh_token') || hashParams.get('refresh_token'),
+                expires_in: urlParams.get('expires_in') || hashParams.get('expires_in')
+            };
+        }
+        
+        // Construir deep link con tokens
+        function buildDeepLink() {
+            const params = getUrlParams();
+            const baseUrl = 'com.terreta.ruralroutes://reset-password';
+            
+            if (params.access_token) {
+                const tokenParams = new URLSearchParams();
+                tokenParams.append('access_token', params.access_token);
+                if (params.refresh_token) tokenParams.append('refresh_token', params.refresh_token);
+                if (params.expires_in) tokenParams.append('expires_in', params.expires_in);
+                
+                return `${baseUrl}#${tokenParams.toString()}`;
+            }
+            
+            return baseUrl;
+        }
+        
+        // Generar código QR
+        function generateQR() {
+            const deepLink = buildDeepLink();
+            const qrCanvas = document.getElementById('qrcode');
+            
+            try {
+                // Intentar usar QRious
+                const qr = new QRious({
+                    element: qrCanvas,
+                    size: 200,
+                    value: deepLink,
+                    background: 'white',
+                    foreground: 'black'
+                });
+                console.log('QR generado con QRious');
+            } catch (error) {
+                console.log('Error con QRious, usando alternativa:', error);
+                // Fallback: usar API de Google Charts
+                generateQRFallback(deepLink);
+            }
+        }
+        
+        // Alternativa usando API de Google Charts
+        function generateQRFallback(url) {
+            const qrContainer = document.querySelector('.qr-container');
+            const canvas = document.getElementById('qrcode');
+            
+            // Reemplazar canvas con imagen
+            const img = document.createElement('img');
+            img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+            img.alt = 'Código QR';
+            img.style.border = '1px solid #ddd';
+            img.style.borderRadius = '8px';
+            img.style.maxWidth = '200px';
+            img.style.height = 'auto';
+            
+            // Reemplazar canvas con imagen
+            canvas.parentNode.replaceChild(img, canvas);
+            console.log('QR generado con API alternativa');
+        }
+        
+        // Intentar abrir la aplicación
+        function openApp() {
+            const deepLink = buildDeepLink();
+            const loadingSection = document.getElementById('loadingSection');
+            const mobileOptions = document.getElementById('mobileOptions');
+            const errorSection = document.getElementById('errorSection');
+            
+            loadingSection.style.display = 'block';
+            mobileOptions.style.display = 'none';
+            
+            // Intentar abrir la app
+            window.location.href = deepLink;
+            
+            // Si después de 3 segundos sigue aquí, mostrar opciones
+            setTimeout(() => {
+                loadingSection.style.display = 'none';
+                mobileOptions.style.display = 'block';
+                
+                // Mostrar botón para Google Play si no se abrió la app
+                if (document.hasFocus()) {
+                    errorSection.style.display = 'block';
+                }
+            }, 3000);
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página cargada, inicializando...');
+            
+            const params = getUrlParams();
+            console.log('Parámetros URL:', params);
+            
+            // Verificar que tenemos tokens válidos
+            if (!params.access_token) {
+                console.log('No hay access_token válido');
+                document.getElementById('errorSection').style.display = 'block';
+                document.getElementById('errorSection').innerHTML = `
+                    <strong>⚠️ Enlace Inválido</strong>
+                    <p>Este enlace de recuperación no es válido o ha expirado.</p>
+                    <p>Por favor, solicita un nuevo enlace de recuperación desde la aplicación.</p>
+                `;
+                return;
+            }
+            
+            console.log('Access token válido encontrado');
+            
+            if (isMobile()) {
+                console.log('Dispositivo móvil detectado');
+                // Móvil: intentar abrir app automáticamente
+                document.getElementById('mobileSection').style.display = 'block';
+                document.getElementById('desktopSection').style.display = 'none';
+                
+                // Auto-abrir después de 1 segundo
+                setTimeout(openApp, 1000);
+                
+                // Listener para botón manual
+                document.getElementById('openAppBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openApp();
+                });
+                
+            } else {
+                console.log('Dispositivo escritorio detectado');
+                // Escritorio: mostrar QR y instrucciones
+                document.getElementById('mobileSection').style.display = 'none';
+                document.getElementById('desktopSection').style.display = 'block';
+                
+                // Verificar si QRious está disponible
+                if (typeof QRious === 'undefined') {
+                    console.log('QRious no disponible, esperando carga...');
+                    // Esperar un poco a que se cargue la librería
+                    setTimeout(() => {
+                        generateQRWithFallback();
+                    }, 500);
+                } else {
+                    console.log('QRious disponible, generando QR...');
+                    generateQRWithFallback();
+                }
+                
+                // Actualizar enlace de reenvío por email
+                const emailLink = document.querySelector('a[href^="mailto:"]');
+                if (emailLink) {
+                    const resetUrl = window.location.href;
+                    emailLink.href = emailLink.href.replace('[RESET_URL]', resetUrl);
+                }
+            }
+        });
+        
+        // Función combinada para generar QR con fallback
+        function generateQRWithFallback() {
+            try {
+                generateQR();
+            } catch (error) {
+                console.log('Error generando QR:', error);
+                // Si falla completamente, mostrar enlace directo
+                const qrContainer = document.querySelector('.qr-container');
+                qrContainer.innerHTML = `
+                    <p><strong>Enlace directo:</strong></p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; word-break: break-all; font-family: monospace; font-size: 12px;">
+                        ${buildDeepLink()}
+                    </div>
+                    <p><small>Copia este enlace y ábrelo en tu móvil</small></p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- 
+==================================================================================================
+CONFIGURACIÓN EN SUPABASE
+==================================================================================================
+
+1. Subir este archivo HTML a tu hosting (ej: https://tudominio.com/reset-password.html)
+
+2. En Dashboard Supabase > Authentication > Email Templates > Reset Password:
+
+<h2>Restablecer contraseña - Rural Routes</h2>
+<p>Has solicitado restablecer tu contraseña.</p>
+<p>Haz click en el siguiente enlace para crear una nueva contraseña:</p>
+<p><a href="https://tudominio.com/reset-password.html?access_token={{ .Token }}&refresh_token={{ .RefreshToken }}&expires_in=3600">Restablecer contraseña</a></p>
+<p>Este enlace expirará en 1 hora.</p>
+
+3. En Authentication > Settings > General > Additional Redirect URLs:
+   - https://tudominio.com/reset-password.html
+   - com.terreta.ruralroutes://reset-password
+
+==================================================================================================
+FLUJO COMPLETO
+==================================================================================================
+
+📧 EMAIL (cualquier dispositivo):
+   ↓ Click "Restablecer contraseña"
+   
+🌐 LANDING PAGE (https://tudominio.com/reset-password.html):
+   ├─ 📱 MÓVIL: Auto-abre app → ResetPasswordActivity
+   └─ 💻 ESCRITORIO: Muestra QR + instrucciones
+   
+📱 APP ANDROID:
+   ↓ Usuario introduce nueva contraseña
+   ✅ Password actualizada
+
+==================================================================================================
+-->
+
+<!-- Ejemplo de configuración con Netlify (gratis) -->
+<!--
+1. Crear cuenta en Netlify.com
+2. Subir este archivo como "reset-password.html"
+3. URL resultante: https://tu-app-name.netlify.app/reset-password.html
+4. Usar esa URL en el template de Supabase
+-->
